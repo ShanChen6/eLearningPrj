@@ -1,0 +1,60 @@
+#version: '4'
+
+services:
+  #Database
+  postgres:
+    image: postgres:17
+    container_name: eLearning_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eLearning
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  #Backend
+  backend:
+    container_name: eLearning_backend
+    restart: unless-stopped
+    image: node:23.11.0
+    working_dir: /eLearning/backend
+    env_file:
+      - /backend/.env
+    volumes:
+      - ./backend:/eLearning/backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    command: [ "npm", "run", "start:dev" ]
+    networks:
+      - eLearning
+
+  #Frontend
+  frontend:
+    container_name: eLearning_frontend
+    restart: unless-stopped
+    image: node:23.11.0
+    working_dir: /eLearning/frontend
+    env_file:
+      - /frontend/.env.local
+    volumes:
+      - ./frontend:/eLearning/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    command: [ "npm", "run", "start:dev" ]
+    networks:
+      - eLearning
+
+volumes:
+  pgdata:
+
+
+networks:
+  eLearning:
+    driver: bridge
