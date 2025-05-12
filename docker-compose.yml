@@ -22,7 +22,7 @@ services:
     image: node:23.11.0
     working_dir: /eLearning/backend
     env_file:
-      - /backend/.env
+      - ./backend/.env
     volumes:
       - ./backend:/eLearning/backend
     ports:
@@ -40,13 +40,11 @@ services:
     image: node:23.11.0
     working_dir: /eLearning/frontend
     env_file:
-      - /frontend/.env.local
+      - ./frontend/.env
     volumes:
       - ./frontend:/eLearning/frontend
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
     command: [ "npm", "run", "start:dev" ]
     networks:
       - eLearning
