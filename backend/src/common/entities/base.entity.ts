@@ -13,21 +13,24 @@ export abstract class BaseEntity {
 
     @Column({
         name: 'created_by',
+        type: 'uuid',
         nullable: true
     })
-    createdBy: number
+    createdBy: string
 
     @Column({
         name: 'modified_at',
+        type: 'timestamp with time zone',
         nullable: true
     })
     modifiedAt: Date
 
     @Column({
         name: 'modified_by',
+        type: 'uuid',
         nullable: true
     })
-    modifiedBy: number
+    modifiedBy: string
 
     @Column({
         name: 'deleted_at',
@@ -37,9 +40,10 @@ export abstract class BaseEntity {
 
     @Column({
         name: 'deleted_by',
+        type: 'uuid',
         nullable: true
     })
-    deletedBy: number
+    deletedBy: string
 
     @Column({
         default: true
