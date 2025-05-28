@@ -14,6 +14,7 @@ import { ProgressesModule } from './modules/progresses/progresses.module';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { BlogsModule } from './modules/blogs/blogs.module';
     ProgressesModule,
     QuizModule,
     ChatModule,
-    BlogsModule
+    BlogsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
