@@ -11,6 +11,8 @@ export const getTypeOrmConfig = (
     password: config.get<string>('DB_PASSWORD'),
     database: config.get<string>('DB_NAME'),
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-    synchronize: true, // bật khi dev
-    autoLoadEntities: true,
+    migrations: [__dirname + '/../migrations/*.{ts,js}'],
+    migrationsTableName: 'migrations',
+    synchronize: false, // tắt ở production, bật ở dev nếu muốn tự động sync schema
+    logging: true,
 });

@@ -1,12 +1,11 @@
-import { PrimaryGeneratedColumn, Column } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 export abstract class BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({
+    @CreateDateColumn({
         name: 'created_at',
-        nullable: true,
         default: () => "CURRENT_TIMESTAMP(6)"
     })
     createdAt: Date;
@@ -18,10 +17,9 @@ export abstract class BaseEntity {
     })
     createdBy: string
 
-    @Column({
+    @UpdateDateColumn({
         name: 'modified_at',
         type: 'timestamp with time zone',
-        nullable: true
     })
     modifiedAt: Date
 
@@ -32,7 +30,7 @@ export abstract class BaseEntity {
     })
     modifiedBy: string
 
-    @Column({
+    @DeleteDateColumn({
         name: 'deleted_at',
         nullable: true
     })

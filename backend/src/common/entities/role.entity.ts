@@ -1,13 +1,13 @@
 // src/roles/entities/role.entity.ts
 import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
-import { BaseEntity } from '../../common/entities/base.entity';
-import { User } from '../users/user.entity';
-import { Permission } from './permission.entity';
+import { BaseEntity } from './base.entity';
+import { User } from './user.entity';
+import { Permission } from '../entities/permission.entity';
 
 @Entity('roles')
 export class Role extends BaseEntity {
     @Column({ type: 'varchar', length: 100, unique: true })
-    name: string; // Ví dụ: 'ADMIN', 'INSTRUCTOR', 'STUDENT'
+    name: string;
 
     @Column({ type: 'text', nullable: true })
     description: string;
