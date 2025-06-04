@@ -14,7 +14,6 @@ import { ProgressesModule } from './modules/progresses/progresses.module';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
-import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -24,7 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: getTypeOrmConfig,
+      useFactory: (configService: ConfigService) => getTypeOrmConfig(configService),
     }),
     UsersModule,
     LessonsModule,
@@ -36,7 +35,6 @@ import { AuthModule } from './modules/auth/auth.module';
     QuizModule,
     ChatModule,
     BlogsModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
