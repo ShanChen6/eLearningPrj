@@ -22,7 +22,7 @@
     "migration:create": "npm run typeorm migration:create -- -n",
     "migration:run": "npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert",
-    "seed:run": "ts-node -r tsconfig-paths/register src/database/seeds/seed.ts"
+    "seed:run": "ts-node -r tsconfig-paths/register src/database/seeds/index.ts"
   },
   "dependencies": {
     "@nestjs/class-transformer": "0.4.0",
