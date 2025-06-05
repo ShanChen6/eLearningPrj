@@ -12,11 +12,11 @@ dotenv.config();
 // Định nghĩa cấu hình DataSourceOptions
 const config: DataSourceOptions = {
     type: 'postgres',
-    host: `localhost`,
-    port: 5432,
-    username: `postgres`,
-    password: `postgres`,
-    database: `postgres`,
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '5432', 10),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     migrations: [
         CreateUsersTable1749056406990,
