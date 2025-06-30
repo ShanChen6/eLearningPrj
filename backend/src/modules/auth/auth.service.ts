@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UsersService } from './../users/users.service';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Role } from "src/common/entities/role.entity";
+import { User } from "src/common/entities/user.entity";
+import { RegisterDto } from "./dto/register.dto";
+import { AuthResponseDto } from "./dto/auth-response.dto";
+import { LoginDto } from "./dto/login.dto";
+import { Repository } from "typeorm";
+import * as bcrypt from 'bcrypt';
+import { AuthJwtPayload } from './types/auth-jwtPayload';
+import { RolesService } from '../roles/roles.service';
+import { Permission } from 'src/common/entities/permission.entity';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+    @InjectRepository(Role)
+    private rolesRepository: Repository<Role>,
+    @InjectRepository(Permission)
+    private permissionsRepository: Repository<Permission>,
+    private jwtService: JwtService,
+    private configService: ConfigService,
+  ) { }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  // ==================== Public Methods ====================
+  // =================Đăng ký (Registration)=================
+  // AuthModule responsible for initial user creation with default roles
+  async register(registerDto: RegisterDto) { }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+  // ================= Đăng nhập (Login) =================
+  // AuthModule handles authentication and token generation
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+  // ================= Refresh Tokens =====================
+  // AuthModule handles token refreshing logic
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+  // ================= Logout ====================
+  // AuthModule handles token invalidation
+
 }

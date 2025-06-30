@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength, IsArray, IsUUID, IsDateString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength, IsArray, IsUUID, IsDateString, IsUrl } from 'class-validator';
 
 export class CreateUserDto {
     @IsNotEmpty({ message: 'Username không được để trống' })
@@ -35,6 +35,7 @@ export class CreateUserDto {
     bio?: string;
 
     @IsOptional()
+    @IsUrl()
     @IsString()
     avatarUrl?: string;
 }

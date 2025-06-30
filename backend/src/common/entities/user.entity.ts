@@ -1,6 +1,6 @@
 import { Exclude } from "class-transformer";
 import { BaseEntity } from "src/common/entities/base.entity";
-import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, Unique } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, Index, JoinTable, ManyToMany, OneToMany, Unique } from "typeorm";
 import { Role } from "./role.entity";
 // import { Course } from "../../modules/courses/course.entity";
 // import { Enrollment } from "../../modules/enrollment/enrollment.entity";
@@ -10,6 +10,7 @@ import { Role } from "./role.entity";
 // import { ChatMessage } from "../../modules/chat/chat.entity";
 // import { BlogPost } from "../../modules/blogs/blogPost.entity";
 // import { BlogComment } from "../../modules/blogs/blog_comments.entity";
+import * as bcrypt from 'bcrypt';
 
 @Entity('users')
 @Unique(["email"])
@@ -18,12 +19,24 @@ export class User extends BaseEntity {
     username: string;
 
     @Column()
-    @Index() // Index cho tìm kiếm email nhanh hơn
+    @Index()
     email: string;
 
-    @Column({ nullable: true })
-    @Exclude() // Không trả về trường này trong response
-    password?: string;
+    @Column()
+    password: string;
+
+    // @BeforeInsert()
+    // async hashPassword() {
+    //     this.password = await bcrypt.hash(this.password, 10);
+    // }
+    @BeforeInsert()
+    @BeforeUpdate() // Re-hash if password is updated
+    async hashPassword() {
+        if (this.password && this.password.length < 60) { // Only hash if it's not already hashed (~60 chars)
+            this.password = await bcrypt.hash(this.password, 10);
+        }
+    }
+
 
     // Quan hệ ManyToMany với RoleEntity: Một người dùng có thể có nhiều vai trò
     @ManyToMany(() => Role, role => role.users, { cascade: true, eager: false })

@@ -15,11 +15,13 @@ import { QuizModule } from './modules/quiz/quiz.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      // envFilePath: '.env'
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -37,6 +39,7 @@ import { AuthModule } from './modules/auth/auth.module';
     QuizModule,
     ChatModule,
     BlogsModule,
+    PermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
